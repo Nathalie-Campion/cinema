@@ -48,7 +48,7 @@ class Acteur
      */
     private $films;
 
-    public function __construct($name, $firstname, $birth, $gender, $nationality)
+    public function __construct($name, $firstname, $birth, $gender, $nationality, $film =[])
     {
         $this->films = new ArrayCollection();
         $this->name = $name;
@@ -57,6 +57,11 @@ class Acteur
         $this->gender = $gender;
         $this->nationality = $nationality;
     }
+
+    // public function __toString()
+    // {
+    //     return $this->$title;
+    // }
 
     public function getId(): ?int
     {

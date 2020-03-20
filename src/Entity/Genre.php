@@ -30,13 +30,8 @@ class Genre
 
     public function __construct($name)
     {
-        $this->films = new ArrayCollection();
+        // $this->films = new ArrayCollection();
         $this->name = $name;
-    }
-
-    public function __toString()
-    {
-        return $this->name;
     }
 
     public function getId(): ?int

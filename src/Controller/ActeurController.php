@@ -26,9 +26,12 @@ class ActeurController extends AbstractController
      */
     public function AddActeur(Request $request)
     {    
-        $data=json_decode($request->getContent(),true);
-        $acteur= new Acteur($data['name'], $data['firstname'], $data['birth'], $data['gender'], $data['nationality']);
+        $data=json_decode($request->getContent(), true);
         // var_dump($data);    
+        $date = new \DateTime($data['birth']);
+        // var_dump($date); 
+
+        $acteur= new Acteur($data['name'], $data['firstname'], $date, $data['gender'], $data['nationality']);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($acteur);
         $entityManager->flush();
@@ -44,6 +47,7 @@ class ActeurController extends AbstractController
         $normalizers = [new ObjectNormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
         $acteur = $acteurRepository->findAll();
+        
         $acteur = $serializer->serialize($acteur, 'json', [
             'circular_reference_handler' => function ($object) {
                 return $object->getId();
@@ -97,7 +101,8 @@ class ActeurController extends AbstractController
         }      
         $acteur->setName($data['name']);
         $acteur->setFirstname($data['firstname']);
-        $acteur->setBirth($data['birth']);
+        $date = new \DateTime($data['birth']);
+        $acteur->setBirth($date);
         $acteur->setGender($data['gender']);
         $acteur->setNationality($data['nationality']);
         $entityManager->flush();

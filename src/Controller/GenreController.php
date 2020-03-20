@@ -26,7 +26,8 @@ class GenreController extends AbstractController
      */
     public function AddGenre(Request $request)
     {    
-        $data=json_decode($request->getContent(),true);
+        $data=json_decode($request->getContent(), true);
+        var_dump($data);
         $genre = new Genre($data['name']);
         // var_dump($data);    
         $entityManager = $this->getDoctrine()->getManager();
@@ -68,6 +69,7 @@ class GenreController extends AbstractController
             }
         ]);
         return new Response($genre, 200, ['Content-Type' => 'application/json']);
+        // return $this->json($genre);
     }
 
     /**
@@ -79,7 +81,7 @@ class GenreController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($genre);
         $entityManager->flush();       
-        return $this->json("Catégorie supprimée");
+        return $this->json("Genre supprimé");
     }
     
     /**
@@ -97,7 +99,7 @@ class GenreController extends AbstractController
         }      
         $genre->setName($data['name']);
         $entityManager->flush();
-        return $this->json("Catégorie editée");
+        return $this->json("Genre édité");
     }
 }
 
