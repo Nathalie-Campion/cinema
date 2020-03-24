@@ -59,7 +59,7 @@ class FilmController extends AbstractController
         $normalizers = [new ObjectNormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
 
-        $films = $filmRepository->findAll();
+        $films = $filmRepository->findBy([], ['year'=>'ASC']);
 
         $films = $serializer->serialize($films, 'json', [
             'circular_reference_handler' => function ($object) {

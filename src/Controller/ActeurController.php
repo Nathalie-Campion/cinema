@@ -47,14 +47,13 @@ class ActeurController extends AbstractController
         $normalizers = [new ObjectNormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
         $acteur = $acteurRepository->findAll();
-        
         $acteur = $serializer->serialize($acteur, 'json', [
             'circular_reference_handler' => function ($object) {
                 return $object->getId();
             }
         ]);
         return new Response($acteur, 200, ['Content-Type' => 'application/json']);
-        // return $this->json($pays);
+
     }
 
     /**
